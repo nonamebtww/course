@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 #include <locale.h>
 
 #include "functions.h"
@@ -80,8 +79,12 @@ int main() {
 		}
 
 		printf("Нажмите любую клавишу для продолжения");
-		_getche();
+		getchar();
 
+#if defined(_WIN32)
 		system("cls");
+#else
+		system("clear");
+#endif
 	} while (1);
 }
