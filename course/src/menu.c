@@ -2,11 +2,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "menu.h"
-
 #include <math.h>
 
+#if defined(_WIN32)
+#include <conio.h>
+#endif
+
+
+#include "menu.h"
 #include "functions.h"
 #include "logging.h"
 #include "models.h"
@@ -47,12 +50,19 @@ void menu() {
                 break;
         }
 
-        printf("\nНажмите любую клавишу для продолжения\n");
-        getchar();
+        int ch;
+
+        while ((ch = getchar()) != '\n' && ch != EOF) {}
 
 #if defined(_WIN32)
+        printf("\nНажмите любую клавишу для продолжения\n");
+        (void)_getch();
+
         system("cls");
 #else
+        printf("\nНажмите Enter для продолжения\n");
+        while ((ch = getchar()) != '\n' && ch != EOF) {}
+
         system("clear");
 #endif
     } while (1);

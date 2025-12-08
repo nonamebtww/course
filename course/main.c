@@ -7,5 +7,10 @@
 int main() {
 	setlocale(LC_ALL, "ru_RU.UTF-8");
 
+#if defined(_WIN32)
+	system("chcp 1251");
+#endif
+
+
 	menu();
 }
