@@ -27,7 +27,7 @@ double f(double x) {
             return NAN;
         }
 
-        return exp(pow(-x, 2) - 1) / pow(x, 2);
+        return (exp(-pow(x, 2)) - 1) / pow(x, 2);
     }
 
     if (x < 6) {
