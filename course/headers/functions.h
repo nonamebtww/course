@@ -4,8 +4,8 @@
 
 double f(double x);
 
-MapEntry* interval(double start, double end, double step, size_t* size);
+MapEntry* interval(double lowest_limit, double highest_limit, int count_steps);
 
-double integral(double lowest_limit, double highest_limit, int count_steps);
+MapEntry* integral(double lowest_limit, double highest_limit, int count_steps);
 
-double derivative(double x, double eps);
+MapEntry* derivative(double lowest_limit, double highest_limit, int count_steps);

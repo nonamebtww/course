@@ -30,6 +30,9 @@
     <ClCompile Include="src\logging.c" />
     <ClCompile Include="src\menu.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

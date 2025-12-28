@@ -11,6 +11,5 @@ int main() {
 	system("chcp 1251");
 #endif
 
-
 	menu();
 }

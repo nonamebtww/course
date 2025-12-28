@@ -90,7 +90,8 @@ void process_function() {
 }
 
 void process_interval() {
-    double a, b, c;
+    double a, b;
+    int c;
 
     printf("Введите начало: ");
     if (scanf("%lf", &a) != 1) {
@@ -104,23 +105,42 @@ void process_interval() {
         return;
     }
 
-    printf("Введите шаг: ");
-    if (scanf("%lf", &c) != 1) {
-        log_error("Ошибка ввода: ожидалось число.");
+    printf("Введите количество разбиений: ");
+    if (scanf("%d", &c) != 1) {
+        log_error("Ошибка ввода: ожидалось целое число.");
+        return;
+    }
+
+	if (c <= 0) {
+        log_error("Количество разбиений должно быть положительным.");
         return;
     }
 
     MapEntry* map;
-    size_t size;
-    map = interval(a, b, c, &size);
+    map = interval(a, b, c);
 
     if (map == NULL) {
         log_error("Неправильный ввод. Не удалось вычислить значения.");
         return;
     }
 
-    for (size_t i = 0; i < size; i++) {
-        printf("%lf | %lf\n", map[i].key, map[i].value);
+	size_t count = (size_t)c + 1;
+	show_interval(map, count);
+
+    int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF) {}
+
+    printf("Сохранить ли интервал в файл? (y/n): ");
+
+    int choice = getchar();
+    while ((ch = getchar()) != '\n' && ch != EOF) {}
+
+    if (choice == 'y' || choice == 'Y') {
+        if (save_interval(map, count) == 0) {
+            printf("Интервал сохранён в файл 'interval.txt'.\n");
+        } else {
+            log_error("Ошибка сохранения интервала в файл.");
+        }
     }
 
     free(map);
@@ -148,35 +168,45 @@ void process_integral() {
         return;
     }
 
-    double result = integral(a, b, c);
-    if (isnan(result)) {
+    MapEntry* result = integral(a, b, c);
+    if (result == NULL) {
         log_error("Ошибка вычисления интеграла: некорректные входные данные.");
         return;
     }
 
-    printf("Интеграл: %lf\n", result);
+    printf("Интеграл: %lf\n", result->value);
+    free(result);
 }
 
 void process_derivative() {
-    double x, eps;
+    double x;
+    int c;
+    double b;
 
-    printf("Введите x: ");
+    printf("Введите точку x (будет использовано как нижний предел): ");
     if (scanf("%lf", &x) != 1) {
         log_error("Ошибка ввода: ожидалось число.");
         return;
     }
 
-    printf("Введите точность: ");
-    if (scanf("%lf", &eps) != 1) {
+    printf("Введите верхний предел (для вычисления eps): ");
+    if (scanf("%lf", &b) != 1) {
         log_error("Ошибка ввода: ожидалось число.");
         return;
     }
 
-    double result = derivative(x, eps);
-    if (isnan(result)) {
+    printf("Введите количество разбиений (для eps): ");
+    if (scanf("%d", &c) != 1) {
+        log_error("Ошибка ввода: ожидалось целое число.");
+        return;
+    }
+
+    MapEntry* result = derivative(x, b, c);
+    if (result == NULL) {
         log_error("Ошибка вычисления производной: некорректные входные данные.");
         return;
     }
 
-    printf("Производная: %lf\n", result);
+    printf("Производная: %lf\n", result->value);
+    free(result);
 }
