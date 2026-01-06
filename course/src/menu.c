@@ -105,7 +105,7 @@ void process_interval() {
         return;
     }
 
-    printf("Введите количество разбиений: ");
+    printf("Введите количество разбиений (точность): ");
     if (scanf("%d", &c) != 1) {
         log_error("Ошибка ввода: ожидалось целое число.");
         return;
@@ -133,13 +133,20 @@ void process_interval() {
     printf("Сохранить ли интервал в файл? (y/n): ");
 
     int choice = getchar();
-    while ((ch = getchar()) != '\n' && ch != EOF) {}
-
     if (choice == 'y' || choice == 'Y') {
-        if (save_interval(map, count) == 0) {
-            printf("Интервал сохранён в файл 'interval.txt'.\n");
+        char filename[260];
+
+        printf("Введите название файла: ");
+
+        if (scanf("%259s", filename) != 1) {
+            log_error("Ошибка ввода: ожидалось имя файла.");
         } else {
-            log_error("Ошибка сохранения интервала в файл.");
+
+            if (save_interval(map, count, filename) == 0) {
+                printf("Интервал сохранён в файл '%s'.\n", filename);
+            } else {
+                log_error("Ошибка сохранения интервала в файл.");
+            }
         }
     }
 
@@ -162,7 +169,7 @@ void process_integral() {
         return;
     }
 
-    printf("Введите количество шагов: ");
+    printf("Введите количество шагов (точность): ");
     if (scanf("%d", &c) != 1) {
         log_error("Ошибка ввода: ожидалось целое число.");
         return;
@@ -183,19 +190,19 @@ void process_derivative() {
     int c;
     double b;
 
-    printf("Введите точку x (будет использовано как нижний предел): ");
+    printf("Введите нижний предел: ");
     if (scanf("%lf", &x) != 1) {
         log_error("Ошибка ввода: ожидалось число.");
         return;
     }
 
-    printf("Введите верхний предел (для вычисления eps): ");
+    printf("Введите верхний предел: ");
     if (scanf("%lf", &b) != 1) {
         log_error("Ошибка ввода: ожидалось число.");
         return;
     }
 
-    printf("Введите количество разбиений (для eps): ");
+    printf("Введите количество разбиений (точность): ");
     if (scanf("%d", &c) != 1) {
         log_error("Ошибка ввода: ожидалось целое число.");
         return;

@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 
 #include "../headers/models.h"
 
@@ -23,11 +23,11 @@ int show_interval(MapEntry* entities, size_t size) {
     return 0;
 }
 
-int save_interval(MapEntry* entities, size_t size) {
-    FILE* file = fopen("interval.txt", "w");
+int save_interval(MapEntry* entities, size_t size, char* filename) {
+    FILE* file = fopen(filename, "w");
    
     if (!file) {
-        log_error("Failed to open interval.log for appending.");
+        log_error("Не удалось открыть для записи.");
         return -1;
     }
 
